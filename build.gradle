@@ -38,6 +38,7 @@ dependencies {
 }
 
 mainClassName = 'vidya.Main'
+applicationDefaultJvmArgs = ['-XstartOnFirstThread']
 
 jar {
     manifest {

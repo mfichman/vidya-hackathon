@@ -1,3 +1,3 @@
 brew 'gradle'
 cask 'java'
-cask 'intellij-idea'
+cask 'intellij-idea-ce'
