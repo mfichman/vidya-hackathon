@@ -6,3 +6,6 @@ out
 *.iml
 *.swo
 *.swp
+*.log
+*.ipr
+*.iws
