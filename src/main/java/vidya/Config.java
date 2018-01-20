@@ -1,13 +1,17 @@
 package vidya;
 
 public class Config {
-    int windowMonitor;
-    int windowSamples;
-    int windowWidth;
-    int windowHeight;
-    int windowSwapInterval;
+    public int windowMonitor;
+    public int windowSamples;
+    public int windowWidth;
+    public int windowHeight;
+    public int windowSwapInterval;
 
-    Window.Mode windowMode = Window.Mode.WINDOWED;
+    public Window.Mode windowMode = Window.Mode.WINDOWED;
 
-    boolean debugIde;
+    public boolean debugIde;
+
+    public void load() {
+        // Load this from a file or something
+    }
 }

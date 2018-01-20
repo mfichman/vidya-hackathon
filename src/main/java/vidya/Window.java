@@ -8,11 +8,9 @@ import org.joml.*;
 
 import java.nio.*;
 
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
-import static org.lwjgl.system.MemoryUtil.*;
 
 public class Window {
     private static final int GL_VERSION_MINOR = 3;
@@ -65,9 +63,8 @@ public class Window {
         glfwMakeContextCurrent(window);
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         glfwSwapInterval(config.windowSwapInterval);
-        //glfwSetWindowUserPointer(window, this);
 
-        loadGl();
+        loadGL();
     }
 
     /* Swap the window back buffers */
@@ -91,6 +88,8 @@ public class Window {
         return glfwWindowShouldClose(window);
     }
 
+    /* Return the framebuffer/viewport size in pixels. This is sometimes different from the window size if the
+     * display is a high-density display, like an OS X retina display. */
     public Vector2f viewport() {
         try (MemoryStack stack = stackPush()) {
             IntBuffer width = stack.mallocInt(1);
@@ -109,7 +108,7 @@ public class Window {
     }
 
     /* Load OpenGL and check the version */
-    private void loadGl() {
+    private void loadGL() {
         GL.createCapabilities();
 
         if (!GL.getCapabilities().OpenGL33) {
@@ -169,8 +168,6 @@ public class Window {
     /* Load a fullscreen window */
     private void loadFullscreen(Config config) {
         GLFWVidMode vidmode = glfwGetVideoMode(monitor);
-
-        Log.info("Here");
 
         int width = config.windowWidth;
         int height = config.windowHeight;
