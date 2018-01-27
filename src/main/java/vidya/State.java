@@ -7,7 +7,10 @@ import java.util.ArrayList;
 public class State {
     public final ArrayList<Object> objects = new ArrayList<Object>();
 
+    public final ArrayList<Command> commands = new ArrayList<Command>();
+
     public void step() {
+        
         objects.removeIf((object) -> {
 
             return true;
