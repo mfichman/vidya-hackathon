@@ -64,7 +64,7 @@ public class Client {
     /* Step the client forward by one logic frame, and consume any input */
     private void step() {
         // input.step()
-        // state.step()
+        //state.step();
     }
 
     /* Render one frame */
