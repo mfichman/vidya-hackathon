@@ -36,6 +36,7 @@ dependencies {
 	compile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
 	compile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
     compile "org.joml:joml:1.9.7"
+	compile "com.google.guava:guava:23.6-jre"
 }
 
 mainClassName = 'vidya.Main'
