@@ -5,4 +5,9 @@ public class Collisions {
         d.takeDamage(l.damage);
         l.kill();
     }
+
+    static void collide(Drone d1, Drone d2) {
+        d1.kill();
+        d2.kill();
+    }
 }

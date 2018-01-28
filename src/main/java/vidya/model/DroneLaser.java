@@ -8,10 +8,10 @@ public class DroneLaser {
     public final double initYPos;
     public final double range;
     public final int damage;
-    public final Color color;
+    public final Colors color;
     public boolean alive = true;
 
-    public DroneLaser(Movable movable, double range, int damage, Color color) {
+    public DroneLaser(Movable movable, double range, int damage, Colors color) {
         this.movable = movable;
         this.initXPos = movable.xPos;
         this.initYPos = movable.yPos;
@@ -23,7 +23,7 @@ public class DroneLaser {
     public double distanceTraveled() {
         double deltaX = movable.xPos - initXPos;
         double deltaY = movable.yPos - initYPos;
-        return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+        return Math.hypot(deltaX, deltaY);
     }
 
     public void update(vidya.State state) {
