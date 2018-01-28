@@ -1,6 +1,8 @@
 package vidya.graphics;
 
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL15.*;
 

@@ -1,5 +1,4 @@
 #version 330
-#extension GL_GOOGLE_cpp_style_line_directive : enable
 
 layout(location = 0) in vec3 position;
 

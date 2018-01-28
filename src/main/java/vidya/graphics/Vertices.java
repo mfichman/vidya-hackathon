@@ -3,8 +3,11 @@ package vidya.graphics;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
@@ -28,34 +31,36 @@ public class Vertices {
 
         public int size() {
             switch (type) {
-                case GL_FLOAT: return 4;
+                case GL_FLOAT: return Float.BYTES * count;
                 default: throw new RuntimeException("invalid format attr type");
             }
         }
     }
 
     public static class Format {
-        public final ArrayList<FormatAttr> attr = new ArrayList();
+        public final List<FormatAttr> attr;
+
+        public Format(FormatAttr... attr) {
+            this.attr = Arrays.asList(attr);
+        }
 
         public int size() {
-           return attr.stream().mapToInt((attr) -> { return attr.count; }).sum();
+           return attr.stream().mapToInt((attr) -> { return attr.size(); }).sum();
         }
     }
 
-    public static class DefaultFormat extends Format {
-        public DefaultFormat() {
-            attr.add(new FormatAttr(GL_FLOAT, 3));
-            attr.add(new FormatAttr(GL_FLOAT, 2));
-            attr.add(new FormatAttr(GL_FLOAT, 3));
-        }
-    }
-
-    public Vertices(Format format) {
+    public void update(Format format, ByteBuffer vertices, ByteBuffer indices) {
         glBindVertexArray(this.id);
 
         final int stride = format.size();
         int index = 0;
         int offset = 0;
+
+        vertexBuffer.update(vertices);
+        vertexBuffer.bind();
+
+        indexBuffer.update(indices);
+        indexBuffer.bind();
 
         for (FormatAttr attr : format.attr) {
             final boolean normalized = true;
@@ -64,15 +69,7 @@ public class Vertices {
             offset += attr.size();
         }
 
-        vertexBuffer.bind();
-        indexBuffer.bind();
-
         glBindVertexArray(0);
-    }
-
-    public void update(ByteBuffer vertices, ByteBuffer indices) {
-        vertexBuffer.update(vertices);
-        indexBuffer.update(indices);
     }
 
     public void bind() {
@@ -80,7 +77,6 @@ public class Vertices {
     }
 
     public int indices() {
-        final int sizeOfInt = 4;
-        return indexBuffer.size() / sizeOfInt;
+        return indexBuffer.size() / Integer.BYTES;
     }
 }

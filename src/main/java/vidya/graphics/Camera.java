@@ -4,12 +4,15 @@ import org.joml.*;
 
 public class Camera {
     public final Vector2f viewport = new Vector2f();
-    public float left;
-    public float right;
-    public float top;
-    public float bottom;
-    public float near = -1;
-    public float far = 1;
+
+    public float left = 0;
+    public float right = 1000;
+
+    public float top = 1000;
+    public float bottom = 0;
+
+    public float near = -100;
+    public float far = 100;
 
     public Matrix4f viewMatrix() {
         return new Matrix4f().identity();

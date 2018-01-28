@@ -6,8 +6,8 @@ import org.joml.Vector3f;
 import java.nio.FloatBuffer;
 
 public class Transform {
-    public Quaternionf rotation;
-    public Vector3f position;
+    public final Quaternionf rotation = new Quaternionf().identity();
+    public final Vector3f position = new Vector3f();
 
     public void put(FloatBuffer buffer) {
         buffer.put(rotation.x);

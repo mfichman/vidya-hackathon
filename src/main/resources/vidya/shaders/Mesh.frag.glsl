@@ -1,5 +1,4 @@
 #version 330
-#extension GL_GOOGLE_cpp_style_line_directive : enable
 
 out vec4 color;
 

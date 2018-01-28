@@ -1,5 +1,6 @@
 package vidya;
 
+import vidya.graphics.Model;
 import vidya.graphics.Shader;
 
 public class Main {
@@ -7,8 +8,6 @@ public class Main {
         Client client = new Client();
 
         client.load();
-        Shader shader = Asset.meshShader;
-
         client.run();
     }
 }

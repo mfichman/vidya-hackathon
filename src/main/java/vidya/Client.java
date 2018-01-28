@@ -1,8 +1,11 @@
 package vidya;
 
 import vidya.controls.Input;
+import vidya.graphics.Renderer;
+import vidya.graphics.Scene;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 /* Runs the game client. Loads a config, window and intitial game state,
  * processes input from controllers/mouse/keywobard, and then updates the game
@@ -11,13 +14,19 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Client {
     /* Configs, like window mode, vsync, etc */
     private Config config = new Config();
-   
+
     private Input input = new Input();
     private State state = new State();
 
     /* Sets up window-related stuff, like centering it on the screen and
      * selecting fullscreen/windowed mode */
     public Window window = new Window();
+
+    /* Renderer */
+    public Renderer renderer = new Renderer();
+
+    /* Scene */
+    public Scene scene = new Scene();
 
     /* Time the current frame began */
     private double time;
@@ -73,6 +82,8 @@ public class Client {
 
     /* Render one frame */
     private void render() {
+        glViewport(0, 0, window.viewport().x(), window.viewport().y());
+        renderer.render(scene);
         window.render();
     }
 

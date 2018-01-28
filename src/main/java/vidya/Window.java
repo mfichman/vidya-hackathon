@@ -10,6 +10,9 @@ import java.nio.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL43.GL_DEBUG_SEVERITY_LOW;
+import static org.lwjgl.opengl.GL43.GL_DEBUG_SOURCE_API;
+import static org.lwjgl.opengl.GL43.glDebugMessageControl;
 import static org.lwjgl.system.MemoryStack.*;
 
 public class Window {
@@ -44,6 +47,7 @@ public class Window {
         glfwWindowHint(GLFW_DEPTH_BITS, 32);
         glfwWindowHint(GLFW_SRGB_CAPABLE, 1);
         glfwWindowHint(GLFW_RESIZABLE, 0);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
         monitor = monitor(config);
 
@@ -90,12 +94,12 @@ public class Window {
 
     /* Return the framebuffer/viewport size in pixels. This is sometimes different from the window size if the
      * display is a high-density display, like an OS X retina display. */
-    public Vector2f viewport() {
+    public Vector2i viewport() {
         try (MemoryStack stack = stackPush()) {
             IntBuffer width = stack.mallocInt(1);
             IntBuffer height = stack.mallocInt(1);
             glfwGetFramebufferSize(window, width, height);
-            return new Vector2f(width.get(0), height.get(0));
+            return new Vector2i(width.get(0), height.get(0));
         }
     }
 
@@ -111,6 +115,8 @@ public class Window {
     private void loadGL() {
         GL.createCapabilities();
 
+        Callback debugProc = GLUtil.setupDebugMessageCallback();
+
         if (!GL.getCapabilities().OpenGL33) {
             Log.error("this program requires OpenGL 3.3");
             System.exit(1);
@@ -119,6 +125,8 @@ public class Window {
         Log.info("opengl vendor: %s", glGetString(GL_VENDOR));
         Log.info("opengl version: %s", glGetString(GL_VERSION));
         Log.info("opengl renderer: %s", glGetString(GL_RENDERER));
+
+        glDebugMessageControl(GL_DEBUG_SOURCE_API, GL_DONT_CARE, GL_DONT_CARE, new int[0], true);
     }
 
     /* Center the window within its monitor */

@@ -1,6 +1,7 @@
 package vidya.graphics;
 
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
 import static org.lwjgl.opengl.GL30.glBindBufferBase;
@@ -26,6 +27,5 @@ public class Uniforms {
 
     public void bind() {
         glBindBufferBase(GL_UNIFORM_BUFFER, this.binding.ordinal(), this.buffer.id);
-        this.buffer.bind();
     }
 }

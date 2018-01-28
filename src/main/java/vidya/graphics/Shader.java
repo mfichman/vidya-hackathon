@@ -62,18 +62,18 @@ public class Shader {
             throw new RuntimeException("shader link failed");
         }
 
-        final int transform = glGetUniformBlockIndex(this.id, "transform_block");
-        final int material = glGetUniformBlockIndex(this.id, "material_block");
-        final int light = glGetUniformBlockIndex(this.id, "light_block");
+        final int transform = glGetUniformBlockIndex(this.id, "transformBlock");
+        final int material = glGetUniformBlockIndex(this.id, "materialBlock");
+        final int light = glGetUniformBlockIndex(this.id, "lightBlock");
 
         if (transform != GL_INVALID_INDEX) {
             glUniformBlockBinding(this.id, transform, Uniforms.Binding.TRANSFORM.ordinal());
         }
         if (material != GL_INVALID_INDEX) {
-            glUniformBlockBinding(this.id, material, Uniforms.Binding.TRANSFORM.ordinal());
+            glUniformBlockBinding(this.id, material, Uniforms.Binding.MATERIAL.ordinal());
         }
         if (light != GL_INVALID_INDEX) {
-            glUniformBlockBinding(this.id, light, Uniforms.Binding.TRANSFORM.ordinal());
+            glUniformBlockBinding(this.id, light, Uniforms.Binding.LIGHT.ordinal());
         }
     }
 
