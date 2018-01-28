@@ -10,6 +10,7 @@ public class State {
 
     public final ArrayList<Drone> drones = new ArrayList<Drone>();
     public final ArrayList<DroneLaser> droneLasers = new ArrayList<DroneLaser>();
+    public final ArrayList<Command> commands = new ArrayList<Command>();
 
     public State() {
         populate();
