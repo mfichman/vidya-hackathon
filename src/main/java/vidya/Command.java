@@ -17,6 +17,10 @@ public class Command {
         INTERACT,
         MOVE,
         AIM,
+        FIRE,
+        RADIAL,
+        ALTFIRE,
+        SPECIAL
     }
 
     public final Code code;

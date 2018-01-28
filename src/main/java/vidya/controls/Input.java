@@ -44,6 +44,9 @@ public class Input {
                 if(buttons.get(GLFW_GAMEPAD_BUTTON_START) == 1){
                     state.commands.add(new Command(Command.Code.MENU));
                 }
+                if(buttons.get(GLFW_GAMEPAD_BUTTON_BACK) == 1){
+                    state.commands.add(new Command(Command.Code.TECH));
+                }
                 if(buttons.get(GLFW_GAMEPAD_BUTTON_B) == 1){
                     state.commands.add(new Command(Command.Code.CANCEL));
                 }
@@ -55,6 +58,12 @@ public class Input {
                 }
                 if(buttons.get(GLFW_GAMEPAD_BUTTON_X) == 1){
                     state.commands.add(new Command(Command.Code.BUILD));
+                }
+                if(buttons.get(GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER) == 1){
+                    state.commands.add(new Command(Command.Code.RADIAL));
+                }
+                if(buttons.get(GLFW_GAMEPAD_BUTTON_LEFT_BUMPER) == 1){
+                    state.commands.add(new Command(Command.Code.SPECIAL));
                 }
 
             } else {
@@ -75,6 +84,12 @@ public class Input {
                     state.commands.add(new Command(Command.Code.AIM, new Vector2f(axes.get(3),axes.get(2))));
                     last_right_x = axes.get(3);
                     last_right_y = axes.get(2);
+                }
+                if( axes.get(4) > new Float(-1) ){ // Left Trigger
+                    state.commands.add(new Command(Command.Code.ALTFIRE, new Vector2f(axes.get(4),0)));
+                }
+                if( axes.get(5) > new Float(-1) ){ // Right Trigger
+                    state.commands.add(new Command(Command.Code.FIRE, new Vector2f(axes.get(5),0)));
                 }
             }
         }
