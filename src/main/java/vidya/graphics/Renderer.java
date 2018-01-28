@@ -41,8 +41,6 @@ public class Renderer {
 
         updateLight(scene.light);
 
-        Asset.droneFighterModel.render(scene);
-
         for (Draw draw : scene.draw) {
             draw.vertices.bind();
             draw.shader.bind();
@@ -73,12 +71,11 @@ public class Renderer {
     }
 
     private void updateTransform(Scene scene, Transform transform) {
-        Matrix4f worldMatrix = new Matrix4f();
         try (MemoryStack stack = stackPush()) {
-            worldMatrix.rotate(transform.rotation);
-            worldMatrix.translate(transform.position);
+            Matrix4f worldMatrix = new Matrix4f().translate(transform.position);
+            //worldMatrix.rotate(transform.rotation)
 
-            Matrix4f worldViewProjMatrix = worldMatrix.mul(scene.camera.viewProjMatrix());
+            Matrix4f worldViewProjMatrix = scene.camera.viewProjMatrix().mul(worldMatrix);
 
             ByteBuffer buffer = stack.malloc(16 * 3 * Float.BYTES);
             worldViewProjMatrix.get(buffer);

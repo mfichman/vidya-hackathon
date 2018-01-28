@@ -1,10 +1,10 @@
 package vidya.model;
 
 public class Movable {
-    public static final int MIN_X = 0;
-    public static final int MAX_X = 1000;
-    public static final int MIN_Y = 0;
-    public static final int MAX_Y = 1000;
+    public static final float MIN_X = 0;
+    public static final float MAX_X = 1000;
+    public static final float MIN_Y = 0;
+    public static final float MAX_Y = 1000;
 
     public double xPos; // X position (meters)
     public double yPos; // Y position (meters)

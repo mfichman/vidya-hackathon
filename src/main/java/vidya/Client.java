@@ -16,6 +16,8 @@ public class Client {
     private Config config = new Config();
 
     private Input input = new Input();
+
+    /* Game state */
     private State state = new State();
 
     /* Sets up window-related stuff, like centering it on the screen and
@@ -44,9 +46,6 @@ public class Client {
 
     /* Total time the window has been inactive */
     private double inactiveTime;
-
-    /* Game state */
-    private State state = new State();
 
     /* Loads config, creates a window, and initializes game state */
     public void load() {
@@ -80,14 +79,14 @@ public class Client {
 
     /* Step the client forward by one logic frame, and consume any input */
     private void step() {
-        // input.step()
         state.step();
-        input.step(state);
+        //input.step(state);
     }
 
     /* Render one frame */
     private void render() {
         glViewport(0, 0, window.viewport().x(), window.viewport().y());
+        state.render(scene);
         renderer.render(scene);
         window.render();
     }

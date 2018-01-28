@@ -7,7 +7,7 @@ public class Config {
     public int windowHeight;
     public int windowSwapInterval;
 
-    public Window.Mode windowMode = Window.Mode.WINDOWED;
+    public Window.Mode windowMode = Window.Mode.FULLSCREEN;
 
     public boolean debugIde;
 

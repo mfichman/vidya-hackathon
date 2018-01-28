@@ -3,8 +3,9 @@
 mtllib ./stupidasspieceofshittriangle.mtl
 
 v 0 0 0
-v 0 100 0
-v 100 100 0
+v 0 10 0
+v 10 10 0
+v 10 0 0
 # 3 vertices
 
 vn 0 1 0
@@ -20,4 +21,5 @@ vt 0 1 0
 o Polygon
 usemtl default
 f 3/3/1 2/2/1 1/1/1
+f 2/3/1 1/2/1 4/1/1
 

@@ -6,6 +6,7 @@ import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.assimp.AIMesh;
 import org.lwjgl.assimp.AIScene;
+import org.lwjgl.system.MemoryStack;
 import vidya.Asset;
 import vidya.math.Transform;
 
@@ -20,6 +21,7 @@ import static org.lwjgl.assimp.Assimp.aiImportFile;
 import static org.lwjgl.assimp.Assimp.aiProcess_JoinIdenticalVertices;
 import static org.lwjgl.assimp.Assimp.aiProcess_Triangulate;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.system.MemoryStack.stackPush;
 import static vidya.graphics.Model.Mesh.FORMAT;
 
 public class Model {
@@ -29,6 +31,18 @@ public class Model {
     public final ArrayList<Mesh> mesh = new ArrayList<Mesh>();
 
     public static class Material {
+        public final Vector3f color;
+        public final Uniforms uniforms = new Uniforms(Uniforms.Binding.MATERIAL);
+
+        public Material(Vector3f color) {
+           this.color = color;
+
+           try (MemoryStack stack = stackPush()) {
+               ByteBuffer buffer = stack.malloc(3 * Float.BYTES);
+               color.get(buffer);
+               uniforms.update(buffer);
+           }
+        }
     }
 
     public static class Mesh {
@@ -38,7 +52,6 @@ public class Model {
         );
 
         public final Vertices vertices = new Vertices();
-        public final Material material = new Material();
     }
 
     public Model(String name) {
@@ -91,12 +104,13 @@ public class Model {
         }
     }
 
-    public void render(Scene scene) {
+    public void render(Scene scene, Transform transform, Material material) {
         for (Mesh mesh : this.mesh) {
             Draw draw = new Draw();
             draw.vertices = mesh.vertices;
             draw.shader = Asset.meshShader;
-            draw.transform = new Transform();
+            draw.transform = transform;
+            draw.uniforms = material.uniforms;
             scene.submit(draw);
         }
 
