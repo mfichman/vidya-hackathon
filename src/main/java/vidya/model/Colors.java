@@ -1,5 +1,5 @@
 package vidya.model;
 
-public enum Color {
+public enum Colors {
     RED, GREEN;
 }

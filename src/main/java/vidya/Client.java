@@ -36,6 +36,9 @@ public class Client {
     /* Total time the window has been inactive */
     private double inactiveTime;
 
+    /* Game state */
+    private State state = new State();
+
     /* Loads config, creates a window, and initializes game state */
     public void load() {
         config.load();
@@ -68,6 +71,8 @@ public class Client {
 
     /* Step the client forward by one logic frame, and consume any input */
     private void step() {
+        // input.step()
+        state.step();
         input.step(state);
     }
 

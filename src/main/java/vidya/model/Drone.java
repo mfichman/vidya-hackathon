@@ -3,7 +3,9 @@ package vidya.model;
 import vidya.*;
 
 public class Drone {
+    private static int idCounter = 0;
 
+    public final int id = idCounter++;
     public final Movable movable;
     public int hp = 100;
     public int hpArmor = 0;
@@ -24,7 +26,7 @@ public class Drone {
 
     public void fire(vidya.State state) {
         state.droneLasers.add(new DroneLaser(new Movable(
-                movable.xPos, movable.yPos, movable.xVel*3, movable.yVel*3), range, damage, Color.GREEN));
+                movable.xPos, movable.yPos, movable.xVel*3, movable.yVel*3), range, damage, Colors.GREEN));
     }
 
     public void randomizeRof() {
@@ -34,20 +36,38 @@ public class Drone {
         rof += (int)modifier;
     }
 
+    public boolean closeToTarget() {
+        double deltaX = movable.xPos - targetXPos;
+        double deltaY = movable.yPos - targetYPos;
+        return Math.hypot(deltaX, deltaY) < 10;
+    }
+
+    public String toString() {
+        return "Id:" + Integer.toString(id) + ", " + movable.toString();
+    }
+
     public void update(vidya.State state) {
-        // Compute liveness.
-        if(hp <= 0) {
-            alive = false;
+        // Debug
+        if(frameCount%60==0) {
+            System.out.println(toString());
         }
 
-        // Fire when ready.
+        // You may fire when ready.
         if((frameCount % rof) == 0) {
             fire(state);
             randomizeRof();
         }
 
         // Move.
-        movable.move();
+        if(!closeToTarget()) {
+            movable.move();
+        }
+
+        // Compute liveness.
+        if(hp <= 0) {
+            kill();
+            return;
+        }
 
         frameCount++;
     }
@@ -72,5 +92,10 @@ public class Drone {
         if(hp < 0) {
             hp = 0;
         }
+    }
+
+    public void kill() {
+        hp = 0;
+        alive = false;
     }
 }
