@@ -1,5 +1,7 @@
 package vidya;
 
+import vidya.controls.Input;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 /* Runs the game client. Loads a config, window and intitial game state,
@@ -9,6 +11,9 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Client {
     /* Configs, like window mode, vsync, etc */
     private Config config = new Config();
+   
+    private Input input = new Input();
+    private State state = new State();
 
     /* Sets up window-related stuff, like centering it on the screen and
      * selecting fullscreen/windowed mode */
@@ -68,6 +73,7 @@ public class Client {
     private void step() {
         // input.step()
         state.step();
+        input.step(state);
     }
 
     /* Render one frame */
