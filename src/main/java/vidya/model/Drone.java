@@ -5,6 +5,7 @@ import vidya.*;
 public class Drone {
     private static int idCounter = 0;
 
+    public final int team;
     public final int id = idCounter++;
     public final Movable movable;
     public int hp = 100;
@@ -20,8 +21,11 @@ public class Drone {
     public boolean alive = true;
     private int frameCount = 0;
 
-    public Drone(Movable movable) {
+    private int idx;
+
+    public Drone(Movable movable,int team) {
         this.movable = movable;
+        this.team = team;
     }
 
     public void fire(vidya.State state) {
@@ -42,6 +46,15 @@ public class Drone {
         return Math.hypot(deltaX, deltaY) < 10;
     }
 
+    public void computeVector() {
+        double deltaX = targetXPos - movable.xPos;
+        double deltaY = targetYPos - movable.yPos;
+        double norm = Math.hypot(deltaX,deltaY);
+        movable.xVel = 0.05*(deltaX/norm)*300 + 0.95*movable.xVel;
+        movable.yVel = 0.05*(deltaY/norm)*300 + 0.95*movable.yVel;
+        // FixMe: make speed ctor arg
+    }
+
     public String toString() {
         return "Id:" + Integer.toString(id) + ", " + movable.toString();
     }
@@ -49,8 +62,22 @@ public class Drone {
     public void update(vidya.State state) {
         // Debug
         if(frameCount%60==0) {
-            System.out.println(toString());
+            //System.out.println(toString());
         }
+
+        // Target a random bruh
+        if(frameCount%300==0||closeToTarget()) {
+            Drone target = null;
+            this.idx = 0;
+            while(target == this || target == null || target.team == team) {
+                this.idx = (int)(Math.random()*state.drones.size());
+                target = state.drones.get(idx);
+            }
+        }
+        Drone target = state.drones.get(idx);
+        targetXPos = target.movable.xPos;
+        targetYPos = target.movable.yPos;
+        computeVector();
 
         // You may fire when ready.
         if((frameCount % rof) == 0) {
@@ -59,9 +86,9 @@ public class Drone {
         }
 
         // Move.
-        if(!closeToTarget()) {
+        //if(!closeToTarget()) {
             movable.move();
-        }
+        //}
 
         // Compute liveness.
         if(hp <= 0) {

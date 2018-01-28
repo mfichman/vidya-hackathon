@@ -1,5 +1,6 @@
 package vidya;
 
+import org.joml.Vector3f;
 import org.lwjgl.assimp.AIScene;
 import vidya.graphics.Model;
 import vidya.graphics.Shader;
@@ -16,4 +17,7 @@ public class Asset {
     );
 
     public static Model droneFighterModel = new Model("vidya/models/DroneFighter.obj");
+
+    public static Model.Material blue = new Model.Material(new Vector3f(1, 0, 0));
+    public static Model.Material red = new Model.Material(new Vector3f(0, 0, 1));
 }
